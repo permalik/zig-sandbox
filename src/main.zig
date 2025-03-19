@@ -1,6 +1,9 @@
 pub fn main() !void {
     std.debug.print("starting..\n", .{});
-    fibonacci.v1_recursive();
+    for (0..10) |i| {
+        std.debug.print("{} ", .{fibonacci.v1_recursive(i)});
+    }
+    std.debug.print("\n", .{});
 }
 
 // test "simple test" {
