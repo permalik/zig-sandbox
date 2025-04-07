@@ -5,6 +5,7 @@
     nixpkgs.url = "github:nixos/nixpkgs/release-24.11";
     nix-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     flake-utils.url = "github:numtide/flake-utils";
+    zig-overlay.url = "github:mitchellh/zig-overlay";
   };
 
   outputs = {
@@ -12,32 +13,45 @@
     nixpkgs,
     nix-unstable,
     flake-utils,
+    zig-overlay,
   }:
     flake-utils.lib.eachDefaultSystem (
       system: let
-        pkgs = import nixpkgs {
-          inherit system;
-          config.allowUnfree = false;
-          overlays = [
-            (final: prev: {
-              unstable = import nix-unstable {
-                inherit system;
-                config.allowUnfree = false;
-              };
-            })
-          ];
-        };
+        zigPackage = zig-overlay.packages.${system}."0.14.0";
+        pkgs = nixpkgs.legacyPackages.${system};
       in {
+        formatter = pkgs.nixpkgs-fmt;
         devShells.default = pkgs.mkShell {
-          buildInputs = [
-            pkgs.alejandra
-            pkgs.unstable.zig_0_13
-          ];
+            name = "zig_sandbox";
+            packages = with pkgs; [
+                alejandra
+                pre-commit
+            ];
+            nativeBuildInputs = [
+                zigPackage
+            ];
 
-          shellHook = ''
-            # Custom Prompt
-            export PS1="\n\[\e[1;32m\][devshell](zig) \w\n❯ \[\e[0m\]"
-          '';
+            shellHook = with pkgs; ''
+                # Source .bashrc
+                . .bashrc
+            '';
+        };
+
+        packages.default = pkgs.stdenv.mkDerivation {
+            name = "zig_sandbox";
+            src = ./.;
+
+            XDG_CACHE_HOME = "${placeholder "out"}";
+
+            # buildInputs = [];
+            buildPhase = ''
+                ${zigPackage}/bin/zig build
+            '';
+
+            installPhase = ''
+                ${zigPackage}/bin/zig build install --prefix $out
+                rm -rf $out/zig
+            '';
         };
       }
     );
