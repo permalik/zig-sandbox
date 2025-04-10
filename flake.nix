@@ -1,5 +1,5 @@
 {
-  description = "zig_curricula";
+  description = "zig_sandbox";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/release-24.11";
