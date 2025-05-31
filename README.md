@@ -1,4 +1,4 @@
-# zig_sandbox
+# zig-sandbox
 sandbox:Zig Programming and Turnkey Ecosystem
 
 [Environment](#environment)
