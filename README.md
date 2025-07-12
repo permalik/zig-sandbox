@@ -8,12 +8,6 @@ sandbox:Zig Programming and Turnkey Ecosystem
 - [Production](#production)
 - [Nuke](#nuke)
 
-[Curricula](#curricula)
-- [Fundamental](#fundamental)
-- [Construct](#construct)
-- [DataStructure](#datastructure)
-- [Algorithm](#algorithm)
-
 ## Environment
 ### Development
 #### Getting Started
@@ -109,11 +103,3 @@ Update project/repository naming in various places and update the README:
 
 Nuking the environment will only recreate an executable-producing build.  
 If a library or combination combination of the two is required, that will need to be created manually.
-
-<!--TODO:-->
-
-## Curricula
-### Fundamental
-### Construct
-### DataStructure
-### Algorithm
