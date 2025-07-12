@@ -1,9 +1,5 @@
 pub fn main() !void {
-    std.debug.print("starting..\n", .{});
-    for (0..10) |i| {
-        std.debug.print("{} ", .{fibonacci.v1_recursive(i)});
-    }
-    std.debug.print("\n", .{});
+    std.debug.print("starting zig-sandbox..\n", .{});
 }
 
 // test "simple test" {
@@ -25,4 +21,3 @@ pub fn main() !void {
 // }
 
 const std = @import("std");
-const fibonacci = @import("calc/fibonacci.zig");
